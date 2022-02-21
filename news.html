@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/main.css">
+  </head>
+
+  <body>
+    <!--DO NOT CHANGE THIS ID's-->
+
+    <div id="container">
+      <div id="sidebar">
+        <!--add your sidebar component here-->
+      </div>
+
+      <div id="main">
+        <!--DO NOT CHANGE THIS ID's-->
+        <!--Show the clicked article in detailed format here ONLY-->
+      </div>
+    </div>
+  </body>
+</html>
+
+<script type = "module">
+
+import sidebar from "./components/sidebar.js"
+  let sidebar_div = document.getElementById("sidebar")
+  sidebar_div.innerHTML = sidebar()
+
+  let search_term = localStorage.getItem(("article"));
+  let s = JSON.parse(search_term)
+  console.log(s)
+
+  let input = document.getElementById("searchbar");
+  input.addEventListener("keypress",(e) =>{
+
+    if((e).key == "Enter"){
+      let input_value = document.getElementById("searchbar").value 
+      localStorage.setItem("search_term",input_value)
+      window.location.href = "search.html"
+    }
+  })
+
+ function appendarticle(s){
+
+  let div1 = document.getElementById("main")
+
+  let div = document.createElement("div")
+  
+  let content_div = document.createElement('div')
+        content_div.id = "content"
+
+        let title =  document.createElement('h1')
+        title.innerText = s.title
+
+        let description =  document.createElement('h4')
+        description.innerText = s.description
+
+        let content =  document.createElement('p')
+        content.innerText = s.content
+
+        content_div.append(title,description,content)
+
+        let img =  document.createElement('img')
+        img.src = s.urlToImage
+
+        let img_div =  document.createElement('div')
+        img_div.append(img)
+        img_div.id = "image"
+
+        div.append(content_div,img_div)
+        div1.append(div)
+ }
+
+ appendarticle(s)
+</script>
